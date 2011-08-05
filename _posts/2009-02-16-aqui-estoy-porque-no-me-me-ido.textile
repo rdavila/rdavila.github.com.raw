@@ -1,0 +1,11 @@
+---
+layout: post
+title: Aqui estoy porque no me he ido
+category: otros
+---
+
+  Asi es amables lectores, me he ausentado demasiado tiempo del blog y motivos he tenido, el principal es el trabajo y el secundario mi vida, creo que me tengo que dar mas tiempo aun para vivir el mundo real, pero bueno eso es tema muy aparte.
+
+  Lo importante es que he decidido volver a escribir en mi blog y en esta oportunidad de manera mas activa y con un sistema de blogs muy sencillo y extensible: "Enki":http://enkiblog.com/.
+
+  Bueno lo mio no es escribir este tipo de posts, me levanto, almuerzo y duermo pensando en Ruby, Rails y demas hierbas asi es que esten atentos que ahora si blogueare mas seguido.

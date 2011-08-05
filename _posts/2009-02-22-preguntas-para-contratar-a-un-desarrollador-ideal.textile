@@ -1,0 +1,6 @@
+---
+layout: post
+title: Preguntas para contratar a un desarrollador ideal
+category: otros
+---
+"Alexey Kovyrin":http://blog.kovyrin.net/ uno de los desarrolladores de "Scribd":http://scribd.com nos muestra "algunas de las preguntas":http://blog.kovyrin.net/2009/02/07/rails-developer-for-a-large-startup-my-vision-of-an-ideal-candidate/ que ellos hacen para contratar a un desarrollador para este tipo de aplicaciones, osea aplicaciones que manejan un alto tráfico, esto nos sirve de mucho a los desarrolladores ya que nos permite saber en que estado se encuentran nuestros conocimientos y cuanto camino falta por recorrer para algún dia tomar una de estas posiciones.

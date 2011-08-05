@@ -1,0 +1,123 @@
+// This import applies a global reset to any page that imports this stylesheet.
+//@import blueprint/reset
+// To configure blueprint, edit the partials/base.sass file.
+//@import partials/base
+// Import all the default blueprint modules so that we can access their mixins.
+//@import blueprint
+// Import the non-default scaffolding module.
+//@import blueprint/scaffolding
+
+// To generate css equivalent to the blueprint css but with your
+// configuration applied, uncomment:
+// @include blueprint
+
+// If you are doing a lot of stylesheet concatenation, it is suggested
+// that you scope your blueprint styles, so that you can better control
+// what pages use blueprint when stylesheets are concatenated together.
+
+@import partials/base
+@import "blueprint/reset"
+@import "blueprint/grid"
+@import "blueprint/typography"
+@import "blueprint/debug"
+
+
+body.bp
+  +blueprint-typography(true)
+  //+blueprint-utilities
+  //+blueprint-debug
+  //+blueprint-interaction
+  // Remove the scaffolding when you're ready to start doing visual design.
+  // Or leave it in if you're happy with how blueprint looks out-of-the-box
+form.bp
+  //+blueprint-form
+  //// You'll probably want to remove the scaffolding once you start styling your site.
+  //+blueprint-scaffolding
+
+// Page layout can be done using mixins applied to your semantic classes and IDs:
+
+/* Colors:
+  #A0A0A0 gray like
+  #251C17 header background
+  #775E43 light brown
+  #AF9F7B crema
+  #F1F4F7 casi white */
+
+body.two-col
+  background-color: #A0A0A0
+  #container
+    +container
+    background-color: #FFF
+    margin: 20px auto
+  #header, #footer
+    +column($blueprint-grid-columns - 1)
+    margin: 0
+  #header
+    +prepend(1)
+    padding-top: 15px
+    background-color: #251C17
+    position: relative
+    height: 125px
+    small
+      position: absolute
+      top: 70px
+      //left: 17px
+      color: #AF9F7B
+      font-style: italic
+      //font-size: small
+    h1
+      color: white
+  #sidebar
+    $sidebar-columns: 5
+    +append(1)
+    +column($sidebar-columns, true)
+    float: right
+    margin-top: 40px
+    border-left: 1px solid #A0A0A0
+    padding-left: 20px
+    img
+      float: left
+      margin-right: 10px
+    h4
+      margin: 0 20px 10px 0
+  #about
+    text-align: justify
+    margin-bottom: 20px
+  #content
+    $content-columns: 16
+    +column($content-columns)
+    +prepend(1)
+    margin: 0
+    padding-top: 40px
+  ul#nav, ul#categories
+    list-style: none
+    padding-left: 10px
+    li
+      text-align: left
+      letter-spacing: 1px
+      margin-bottom: 5px
+
+  .post
+    h2
+      line-height: 35px
+      color: #251C17
+    h3
+      color: #775E43
+  .highlight
+    background-color: #FFF
+    overflow: auto
+    padding-left: 15px
+    border: 1px solid black
+    margin-bottom: 15px
+
+  .underlined
+    border-bottom: 2px solid black
+
+  ul.posts_list
+    list-style-type: none
+    margin: 0
+    padding: 0
+    li
+      padding-bottom: 5px
+    span
+      color: #A0A0A0

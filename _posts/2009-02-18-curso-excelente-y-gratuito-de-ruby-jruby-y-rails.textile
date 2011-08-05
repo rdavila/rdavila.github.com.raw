@@ -1,0 +1,7 @@
+---
+layout: post
+title: Curso excelente y gratuito de Ruby, JRuby y Rails
+categories: ['ruby', 'rails', 'otros']
+---
+
+En la lista argentina de Ruby enviaron información sobre un excelente sitio donde oferecen varios cursos gratuitos y entre ellos enseñan "Ruby, JRuby y Rails":http://www.javapassion.com/rubyonrails creo que esto le será de mucho provecho para aquellos que quieran iniciarse en este marvilloso lenguaje.

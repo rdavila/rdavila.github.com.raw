@@ -1,0 +1,66 @@
+---
+layout: post
+title: Usar otro idioma cuando el principal no esta disponible para traducción
+category: rails
+---
+Cuando estamos realizando una aplicación que estara disponible en multiples idiomas, generalmente existe un idioma principal. Hasta el momento no he tenido oportunidad de realizar una aplicación de este tipo, pero si he estado observando esta caracteristica disponible desde Rails 2.
+
+En muchas ocasiones me he topado con sitios cuyas páginas no estan traducidas completamente en un solo idioma, sino tienen por ejemplo gran parte de la pagina en español y otra pequeña parte en inglés. Viendo esta situación me preguntaba si esto era posible de hacer en Rails 2 en su momento y por lo que recuerdo no se podia lograr eso al menos no con la libreria que ofrece Rails por defecto para la internacionalización y como estaba empezando a ver algo de codigo fuente de Rails sin miedo, me anime a realizar un plugin que permitiera realizar esto: "github.com/rdavila/i18n_fallback":http://github.com/rdavila/i18n_fallback
+
+Actualmente me encuentro explorando Rails 3 beta 4 realizando una pequeña aplicación y me surgio la necesidad de realizar esto, recordé de mi plugin, pero pensé tambien en que ha pasado mucho tiempo y seguramente dicha funcionalidad ya se encuentra disponible en la librería y claro que fue asi: "wiki.github.com/svenfuchs/i18n/fallbacks":http://wiki.github.com/svenfuchs/i18n/fallbacks
+
+Configurar esto en tu aplicación es realmente sencillo:
+
+Primero, especificamos el idioma principal de la aplicación:
+
+{% highlight ruby %}
+# config/application.rb (Rails 3)
+# config/environment.rb (Rails 2)
+config.i18n.default_locale = :es
+{% endhighlight %}
+
+Segundo, configuramos como trabajara el fallback:
+
+{% highlight ruby %}
+# config/initializers/i18n.rb
+I18n.fallbacks.map(:es => :en)
+{% endhighlight %}
+
+Con eso estamos indicando de que si no se encuentra disponible una traducción en español use la traducción en inglés.
+
+Antes de llegar a esta solución estaba probando lo siguiente: 
+
+{% highlight ruby %}
+# config/application.rb
+config.i18n.default_locale = :en
+# config/initializers/i18n.rb
+I18n.locale = :es
+{% endhighlight %}
+
+Asi es como debe trabajar por defecto, osea tomar el idioma por defecto si no encuentra la traduccion para el idioma actual, pero despues de golpearme la cabeza por buen rato por no encontrar razón para que no funcione, encontre que el metodo I18n#locale usa *Thread#current* bajo la manga por lo cual eso solo funciona en el contexto del ciclo petición/respuesta osea en el controlador.
+
+Ahora suponiendo que tenemos lo siguiente:
+
+{% highlight text %}
+# config/locales/en.yml
+en:
+  car: 'Car'
+  bike: 'Bike'
+# config/locales/es.yml
+es:
+  car: 'Auto'
+{% endhighlight %}
+
+si tenemos configurado nuestro idioma principal como español y probamos en la consola, observaremos lo siguiente:
+
+{% highlight irb %}
+>> helper.t :car
+"Auto"
+>> helper.t :bike
+"Bike"
+{% endhighlight %}
+
+Osea esta vez no obtenemos "Translation missing" o un error de aplicación como es lo usual sino obtenemos la traducción en el otro idioma configurado.
+
+Happy hacking!
+

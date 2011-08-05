@@ -1,0 +1,8 @@
+---
+layout: post
+title: 'Internacionalización en Rails: Gettext o I18n?'
+category: rails
+---
+El dia de ayer, alguien hizo esta "consulta":http://www.ruby-forum.com/topic/182733 en la "lista de rails hispana":http://lists.simplelogica.net/mailman/listinfo/ror-es en la cual participo y me sirvio bastante par tomar la decisión: Gettext.
+
+Ahora tengo bien en claro que usare Gettext para la traducción de cadenas en mis templates y I18n para para la localización de las fechas y mensajes de error de *ActiveRecord*

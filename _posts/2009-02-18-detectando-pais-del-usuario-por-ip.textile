@@ -1,0 +1,96 @@
+---
+layout: post
+title: Detectando pais del usuario por IP
+category: rails
+---
+Obtener el pais del usuario a traves de su IP es una tarea realmente sencilla gracias a los servicios que proveen terceros para tal fin, pero lo que nos puede tomar tiempo es encontrar un servicio que sea decentemente fiable al momento de la detección del pais.
+
+h3. Como trabajan estos servicios?
+
+Cada pais tiene un pool de rangos de IPs asignados para el, este pool esta en constante actualización supongo que es debido a que los usuarios de Internet van en aumento.
+
+El navegador al momento de hacer una petición a un sitio envia ciertas cabeceras que es como un Hash que contiene información al estilo clave-valor, entre una de esas cabeceras se encuentra la ip del usuario quien visita el sitio, entonces al obtener la IP del usuario no queda mas que consultar contra ese pool de direcciones IP que tenemos y ver a que pais pertenece esa IP
+
+h3. Servicios que he probado y por tanto puedo recomendar
+
+El primer servicio que probe se llama "Find IP Address":http://www.find-ip-address.org lo bueno que tiene este servicio es que te "otorga el rango de IPs":http://www.find-ip-address.org/ip-country para el pais que tu eligas, pudiendo luego exportarlo a tu base de datos y realizar el trabajo de detección de país. El problema con este servicio es que no es tan fiable como parecia inicialmente, asi es que tuve que seguir "huaqueando".
+
+El otro servicio que probé y finalmente me convenció fue el de la empresa "Maxmind":http://www.maxmind.com, llegue a esta empresa por medio de la página de Mysql, que en algun lugar(en este momento no recuerdo) te da informacióm referente a tu IP y usa el servicio de esta empresa.
+
+h3. Ahora si al grano
+
+Maxmind tiene un servicio denominado "GeoIP Country":http://www.maxmind.com/app/country el cual es de pago, pero tiene otro similar llamado "Geolite":http://www.maxmind.com/app/geolitecountry la principal diferencia radica en la precisión 99.8% del servicio de pago contra 99.5% del gratuito, la verdad no se que tanto impacto pueda tener esta diferencia, pero he venido probando el Geolite y hasta ahora todo va de perlas.
+
+h3. Integrando el servicio con tu aplicación Rails
+
+El servicio tiene disponibles "APIs para varios lenguajes:http://www.maxmind.com/app/api entre el cual esta nuestro favorito, pues bien a proceder con la integración:
+
+*Paso 1:*
+"Descargar":http://geolite.maxmind.com/download/geoip/api/c/GeoIP.tar.gz la libreria escrita en C para el Geoip.
+
+Luego procedemos con la instalacióm, lo cual es trivial para aquellos que vienen usando linux un par de meses:
+
+{% highlight bash %}
+tar -xvzf GeoIP.tar.gz
+cd GeoIp
+./configure
+make
+sudo make install
+{% endhighlight %}
+
+*Paso 2:*
+"Descargar":http://geolite.maxmind.com/download/geoip/api/ruby/net-geoip-0.06.tar.gz la libreria para Ruby.
+
+Igualmente a lo anterior, en la consola lo descomprimimos y pasamos a la instalación:
+
+{% highlight bash %}
+tar -xvzf net-geoip-0.06.tar.gz
+cd net-geoip-0.06
+ruby extconf.rb --with-geoip-include=/usr/local/include
+make
+sudo make install
+{% endhighlight %}
+
+Si al momento de la instalación te sale algún error, entonces hay que editar el archivo Makefile y reemplazar una cadena que dice "Wall-g" por "Wall -g", el error es simplemente por la falta de la separación mediante el espacio en blanco para los parametros.
+
+*Paso 3:*
+
+Finalmente tenemos que "descargarnos la base de datos":http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz con los rangos de IPs en formato binario, igualmente procedemos a descomprimirlo y a copiarlo en algun lugar de nuestra aplicación:
+
+{% highlight bash %}
+gzip -d GeoIP.dat.dz
+cp GeoIP.dat /ruta/a/tu/rails_app/db/
+{% endhighlight %}
+
+
+En este caso yo lo he copiado dentro del directorio db de mi aplicación, tu puedes copiarlo donde creas conveniente.
+
+*Paso 4:*
+
+Ahora crearemos un initializer donde declararemos una constante la cual servira de referencia para acceder a las funciones de la libreria:
+
+{% highlight ruby %}
+#en config/initializers/geo_ip.rb
+GEOIP = Net::GeoIP.open(File.join(Rails.root,'db','GeoIP.dat'), Net::GeoIP::TYPE_RAM)
+{% endhighlight %}
+
+*Paso 5:*
+
+Finalmente podemos crear un filtro para tener disponible el codigo de pais del usuario en toda nuestra aplicación:
+
+{% highlight ruby %}
+#en app/controllers/application.rb
+class ApplicationController < ActionController::Base
+  before_filter :current_country
+
+  helper_method :current_country #por si quieres usarlo en tus vistas
+
+  protected
+  
+  def current_country
+    GEOIP.country_code_by_addr(request.remote_ip)
+  end
+end
+{% endhighlight %}
+
+Y bien, eso ha sido todo, como ven no es muy complicado poder saber el pais del visitante de nuestro sitio, espero que haya sido de utilidad este artículo.

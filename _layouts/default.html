@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang='es' xml:lang='es' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>{{ page.title }}</title>
+    <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+    <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/syntax.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 8]>
+        <link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <![endif]-->
+  </head>
+  <body class="bp two-col">
+    <div id="container">
+      <div id="header">
+        <h1><a href="/" title="Blog de Ruben on Rails">Rubén on Rails</a></h1>
+        <small>Blogueando sobre Ruby y Rails cuando el tiempo y las ganas lo permiten ;)</small>
+      </div>
+      <div id="content">
+        {{ content }}
+      </div>
+      <div id="sidebar">
+        <div id="about">
+          <img src="/images/rdavila.jpg" />
+          Soy Rubén Davila Santos, egresado de la escuela de rehabilitación de MS Visual Fox Pro, MS Visual Basic y PHP, disfruto la mayoría de mi tiempo desarrollando con Ruby y Rails.
+        </div>
+        <h4 class='underlined'>Secciones</h4>
+        <ul id="nav">
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Tecnologia</a></li>
+          <li><a href="#">Portafolio</a></li>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="/archive">Archivo</a></li>
+        </ul>
+        <h4 class='underlined'>Categorias</h4>
+        <ul id="categories">
+          <li><a href="/categorias/ruby">Ruby</a></li>
+          <li><a href="/categorias/rails">Rails</a></li>
+          <li><a href="/categorias/otros">Otros</a></li>
+        </ul>
+      </div>
+      <div id="footer">
+        <div style="background-color: #A0A0A0">#A0A0A0</div>
+        <div style="background-color: #251C17">#251C17</div>
+        <div style="background-color: #775E43">#775E43</div>
+        <div style="background-color: #AF9F7B">#AF9F7B</div>
+        <div style="background-color: #F1F4F7">#F1F4F7</div>
+      </div>
+    </div>
+  </body>
+</html>

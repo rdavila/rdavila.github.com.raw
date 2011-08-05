@@ -1,0 +1,191 @@
+---
+layout: post
+title: Javascript no intrusivo con Jquery en Rails
+category: rails
+---
+He estado tratando de mejorar esta semana mi jquery-fu y una de las tareas que me propuse fue hacer que ciertas acciones comunes en mis controladores como el *destroy* y el *create* mejoraran la experiencia del usuario aprovechandose de Ajax y a la vez se porten bien con aquellos usuario que tienen Javascript desactivado, pues bien a la marcha, empezaremos con la acción 'destroy':
+
+h3. Cargando librerias de javascript
+
+Lo primero es cargar las librerias javascripts que necesitemos, como estoy usando "HAML":http://haml.hamptoncatlin.com/, lo hago de la siguiente manera en mi layout:
+
+{% highlight text %}
+= javascript_include_tag 'jquery-1.3.2.min', 'jquery.livequery', 'jquery-ui-1.7.custom.min', 'application'
+{% endhighlight %}
+
+h3. Creando nueva accion y vista para destroy
+
+He tomado como ejemplo un controlador para el manejo de categorias
+
+{% highlight ruby %}
+= javascript_include_tag 'jquery-1.3.2.min', 'jquery.livequery', 'jquery-ui-1.7.custom.min', 'application'
+class CategoriesController < ApplicationController
+  def destroy
+    Category.destroy(params[:id])
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'Categoria eliminada con exito'
+        redirect_to categories_url
+      end
+      format.js { head :ok }
+    end
+  end
+
+  def destroy_nojs
+    @category = Category.find(params[:id])
+  end
+end
+{% endhighlight %}
+
+y la vista quedaria asi:
+
+{% highlight text %}
+-# app/views/categories/destroy_nojs.html.haml
+%h2== Eliminar categoria: #{@category.name.humanize}
+
+¿Estas seguro que deseas eliminar esta categoria?
+
+- form_for @category, :html => { :method => :delete } do |f|
+  = f.submit 'Si, eliminar esta categoria'
+{% endhighlight %}
+
+Hasta aqui ya tendremos la accion *destroy* no intrusiva a diferencia de lo que nos genera esto:
+
+{% highlight text %}
+= link_to 'Eliminar', category_path(category), :method => :delete, :confirm => '¿Seguro ...?'
+{% endhighlight %}
+
+Lo de arriba genera codigo Javascript intrusivo.
+
+h3. Ajaxificando la accion delete
+
+Aqui viene la parte buena, pues necesitamos que eliminar una categoria sea una tarea al vuelo y si nos ponemos a pensar bien este puede ser un requerimiento que se repita en muchas partes de nuestra aplicación asi que necesitamos algo que sea reutilizable, pues bien, manos a la obra:
+
+Suponiendo que tenemos una vista *index* para las categorias algo asi:
+
+{% highlight text %}
+-#app/views/categories/index.html.haml
+
+- for category in @categories
+  %li
+    == #{category.name} 
+    = link_to 'Editar', edit_category_path(category)
+    = link_to 'Eliminar', {:action => 'destroy_nojs', :id => category}, :class => 'delete_category'
+</code>
+{% endhighlight %}
+
+Entonces nuestro archivo *public/javascripts/application.js* quedaria algo asi:
+
+{% highlight javascript %}
+$.fn.delete_link = function(msg_confirm, message){
+  $(this).livequery("click", function() {
+    if (confirm(msg_confirm)) {
+      var ajaxTarget = $(this).attr("href").replace(/destroy_nojs\//,"") + ".js";
+      $.post(ajaxTarget, { _method: "delete" },
+       function(data){
+         alert(message);
+       });
+      $(this).parent().fadeOut("slow");
+    }
+    return false;
+  });
+};
+
+$(document).ready(function(){
+  $(".delete_ele").delete_link("Seguro que desea eliminar esta categoria?", "Categoria eliminada con éxito");
+});
+{% endhighlight %}
+
+Como ven en el código de la funcion *delete_link* me he creado una especie de convención para los enlaces que son para eliminar recursos y la convención es que deben apuntar a la accion *destroy_nojs* la cual es la versión no intrusiva, de esta manera puedo crearme una función la cual puedo reutilizarla.
+
+h3. Ajaxificando el formulario de nueva categoria
+
+Esto no podia ser mas sencillo, suponiendo que tenemos en el controlador de categorias lo siguiente:
+
+{% highlight ruby %}
+class CategoriesController < ApplicationController
+  def new
+    @category = Category.new
+    @categories = Category.all
+  end
+
+  def destroy
+    Category.destroy(params[:id])
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'Categoria eliminada con exito'
+        redirect_to categories_url
+      end
+      format.js { head :ok }
+    end
+  end
+
+  def destroy_nojs
+    @category = Category.find(params[:id])
+  end
+end
+{% endhighlight %}
+
+la vista para la acción new quedaria algo asi:
+
+{% highlight text %}
+-#app/views/categories/new.html.haml
+%h2 Nueva categoria
+- form_for(@category, :html => {:id => 'new_category'})  do |f|
+  %p
+    = f.label :name, 'Nombre:'
+    = f.text_field :name
+    = f.submit 'Agregar categoria'
+
+%ul#categories
+  = render :partial => @categories
+{% endhighlight %}
+
+y el partial para la categoria quedaria asi:
+
+{% highlight text %}
+-#app/views/categories/_category.html.haml
+%li[category]
+  == #{category.name} 
+  = link_to 'Editar', edit_category_path(category)
+  = link_to 'Eliminar', {:action => 'destroy_nojs', :id => category}, :class => 'delete_category'
+{% endhighlight %}
+
+Entonces lo que faltaria seria ajaxificar el formulario y hacer algo despues que se creo la categoria, el archivo *public/javascripts/application.js* ahora quedaria asi:
+
+{% highlight javascript %}
+$.fn.delete_link = function(msg_confirm, message){
+  $(this).livequery("click", function() {
+    if (confirm(msg_confirm)) {
+      var ajaxTarget = $(this).attr("href").replace(/destroy_nojs\//,"") + ".js";
+      $.post(ajaxTarget, { _method: "delete" },
+       function(data){
+         alert(message);
+       });
+      $(this).parent().fadeOut("slow");
+    }
+    return false;
+  });
+};
+
+$(document).ready(function(){
+  $("#new_category").submit(function() {
+    $.post($(this).attr('action') + '.js', $(this).serializeArray(), null, 'script');
+    return false;
+  });
+
+  $(".delete_category").delete_link("Seguro que desea eliminar esta categoria?", "Categoria eliminada con éxito");
+});
+{% endhighlight %}
+
+Hasta aqui ya hemos ajaxificado el formulario, ahora falta realizar algo despues que se creo la categoria, lo que haremos es simplementemente agregar un nuevo elemento a la lista con identifciador *#categories* y agregarle un pequeño efecto, la vista para la acción create quedaria asi:
+
+{% highlight text %}
+#app/views/categories/create.js.erb
+$('#categories').append('<%= escape_javascript(render(:partial => @category)) %>');
+$('#new_category_form  :text').val("");
+$('#<%= dom_id(@category) %>').effect("highlight");
+{% endhighlight %}
+
+Y bien eso ha sido todo, no es nada dificil cuando se tiene un conocimiento adecuado de "Jquery":http://jquery.com/, el cual he estado obteniendo en estos ultimos dias y lo mas importante es que logras poner cada cosa en su lugar, el HTML donde debe estar, el CSS tambien y el Javascript igual, esto ayuda bastante cuando se termina la aplicación y hay que hacer mejoras o agregar nuevas cosas, espero que este articulo haya sido de utilidad a alguien.
+

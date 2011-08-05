@@ -1,0 +1,6 @@
+---
+layout: post
+title: Mi presentación en el Barcamplima
+category: otros
+---
+En unos momentos me tocara exponer en el "Barcamplima":http://barcamplima.com/, hasta el momento todo va saliendo muy bien, pueden "ver mi diapositiva":http://www.slideshare.net/rdavila/tips-para-desarrolladores-web si desean y espero que sigan viniendo mas eventos de este tipo!

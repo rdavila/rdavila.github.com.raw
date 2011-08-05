@@ -1,0 +1,56 @@
+---
+layout: post
+title: Modificando archivo existente con Rails
+category: rails
+---
+Rails tiene muy buenas utilidades que usa internamente, pero que muchas veces no sabemos como sacarle provecho para nuestros proyectos.
+
+Esta vez tuve la necesidad de agregar contenido a un archivo, pero el nuevo contenido no iria al final del archivo lo cual es muy facil de hacer con Ruby sino en un lugar que yo necesitaba especificar, para esto recorde que Rails realiza esta tarea al momento que usamos generadores como por ejemplo el *scaffold* o el *resource*.
+
+Asi que decidi echarle un ojo al codigo de estos generadores y observe que define un metodo llamado *gsub_file* el cual se encuentra accesible y "documentado":http://apidock.com/rails/Rails/TemplateRunner/gsub_file para nuestro uso.
+
+Lo que yo necesitaba era modificar el archivo *test/test_helper.rb* como parte del trabajo de un "template":http://m.onkey.org/2008/12/4/rails-templates que estaba creando, el archivo inicialmente se encuentra asi:
+
+{% highlight ruby %}
+ENV["RAILS_ENV"] = "test"
+require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+require 'test_help'
+
+class ActiveSupport::TestCase
+  ...
+end
+{% endhighlight %}
+
+Entonces despues de aplicar lo siguiente en mi template:
+
+{% highlight ruby %}
+text = %q{require File.expand_path(File.dirname(__FILE__) + "/helpers.rb")
+Dir[File.join(Rails.root, 'test', 'factories', '*.rb')].each do |file|
+  require file
+end
+}
+
+gsub_file "test/test_helper.rb", "require 'test_help'" do |match|
+  "#{match}\n\n#{test}"
+end
+{% endhighlight %}
+
+El archivo *test/test_helper.rb* modificado quedaria asi:
+
+{% highlight ruby %}
+ENV["RAILS_ENV"] = "test"
+require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+require 'test_help'
+
+require File.expand_path(File.dirname(__FILE__) + "/helpers.rb")
+Dir[File.join(Rails.root, 'test', 'factories', '*.rb')].each do |file|
+  require file
+end
+
+class ActiveSupport::TestCase
+  #...
+end
+{% endhighlight %}
+
+Y asi de sencillo fue modificar un archivo gracias a las utilidades que trae Rails, espero que sea util para alguien.
+

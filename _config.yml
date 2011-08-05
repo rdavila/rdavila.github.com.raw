@@ -1,0 +1,6 @@
+markdown: rdiscount
+pygments: true
+exclude: [ 'sass', 'config.rb' ]
+
+category_title_prefix: 'Categoría: '
+category_dir: categorias

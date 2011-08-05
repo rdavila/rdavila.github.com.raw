@@ -1,0 +1,53 @@
+---
+layout: post
+title: Instalar documentación de ruby desde el codigo fuente
+category: ruby
+---
+Algo que no me funcionaba y que no le preste mucha atención por tenerla disponible en Internet era la documentación de Ruby mediante mi comoda consola a traves del comando *ri*. Pero esta vez, ya estando un poco ocioso me puse a averiguar el porqué y husmeando entre las opciones de configuracion del instalador encontre la respuesta.
+
+Siempre que instalo Ruby prefiero hacerlo desde el código fuente, asi que aqui les dejo los pasos:
+
+h3. Obtener y descomprimir el codigo fuente:
+
+{% highlight bash %}
+  wget ftp://ftp.ruby-lang.org/pub/ruby/1.8/ruby-1.8.7-p174.tar.gz
+  tar -xvzf ruby-1.8.7-p174.tar.gz
+  cd ruby-1.8.7-p174
+{% endhighlight %}
+
+h3. Buscar alguna opción de configuración relacionada
+
+{% highlight bash %}
+./configure --help |grep doc #(que seria de nuestras vidas sin *grep*)
+{% endhighlight %}
+
+La salida seria esta:
+
+{% highlight text %}
+  --infodir=DIR          info documentation [DATAROOTDIR/info]
+  --mandir=DIR           man documentation [DATAROOTDIR/man]
+  --docdir=DIR           documentation root [DATAROOTDIR/doc/PACKAGE]
+  --htmldir=DIR          html documentation [DOCDIR]
+  --dvidir=DIR           dvi documentation [DOCDIR]
+  --pdfdir=DIR           pdf documentation [DOCDIR]
+  --psdir=DIR            ps documentation [DOCDIR]
+  --enable-install-doc    build and install rdoc indexes during install (aja te encontramos!)
+  --with-mantype=TYPE specify man page type; TYPE is one of man and doc
+{% endhighlight %}
+
+h3. Proceder a la instalacion clasica
+
+{% highlight bash %}
+ ./configure --enable-install-doc
+ make
+ sudo make install
+{% endhighlight %}
+
+h3. Terminada la instalación verificamos su funcionamiento:
+
+{% highlight bash %}
+ri Array.each
+{% endhighlight %}
+
+Como un adicional, tenemos disponible un "plugin":http://www.vim.org/scripts/script.php?script_id=2706 para el "editor":http://www.vim.org, si aún no lo usas estás a tiempo de "pedir perdón":http://diego.chacon.googlepages.com/Manual_VIM.pdf ;)
+

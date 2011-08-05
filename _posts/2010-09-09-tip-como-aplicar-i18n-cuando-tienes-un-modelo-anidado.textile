@@ -1,0 +1,17 @@
+---
+layout: post
+title: 'Tip: Como aplicar i18n cuando tienes un modelo anidado'
+category: rails
+---
+Supongamos que tenemos un modelo nombrado: MiModulo::MiModelo, si queremos aplicar internacionalización para sus atributos de tal manera que al mostrar los mensajes de error (error_messages_for) estén correctamente traducidos, tenemos que realizar lo siguiente en el archivo *config/locales/es.yml* para el caso del idioma español:
+
+{% highlight yaml %}
+es:
+  activerecord:
+   attributes:
+     mi_modulo/mi_modelo:
+       name: Nombre
+{% endhighlight %}
+
+Eso funciona debido a que Rails usa *MiModelo.name.underscore* internamente para determinar la clave a buscar en el archivo del i18n para determinado modelo.
+

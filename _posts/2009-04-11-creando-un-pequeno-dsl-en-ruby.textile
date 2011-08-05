@@ -1,0 +1,85 @@
+---
+layout: post
+title: Creando un pequeño DSL en Ruby
+category: ruby
+---
+Estaba aprovechando este fin de semana algo largo debido a la *semana santa* y recorde que tenia que revisar un "tutorial":http://github.com/chad/sor-tutorial/tree/master muy importante que habia dado "Chad Fowler":http://chadfowler.com/ y "Marcel Molina Jr":http://marcelmolina.com/ en el evento de "Scotland On Rails":http://scotlandonrails.com/ sobre algunas cosas basicas y avanzadas que todo desarrollador en Ruby deberia manejar.
+
+El primer tema que tocaron en el tutorial fueron sobre los "Blocks y Closures":http://is.gd/rVN4, este es un punto muy fuerte para mi del lenguaje y junto al famoso "method_missing":http://apidock.com/ruby/Kernel/method_missing permite que joyas como Rails salgan a la luz, bien aqui mi primer intento para resolver el ejercicio:
+
+{% highlight ruby %}
+class Configuration
+  def initialize
+    @options = {}
+  end
+
+  def method_missing(name, *args, &block)
+    if block_given?
+      @options[name.to_s] = Configuration.new
+      block.call(@options[name.to_s])
+    else
+      if name.to_s =~ /=\Z/
+        @options[name.to_s.gsub!(/=/,'')] = args.shift
+      else
+        @options[name.to_s]
+      end
+    end
+  end
+end
+
+def configure
+  conf = Configuration.new
+  yield conf
+  conf
+end
+
+# Aqui un ejemplo
+
+configuration = configure do |config|
+  config.tail_logs = true
+  config.max_connections = 55
+  config.app_server do |app_server_config|
+    app_server_config.port = 8808
+  end
+end
+
+configuration.class # => Configuration
+configuration.tail_logs # => true
+configuration.app_server.port # => 8808
+{% endhighlight %}
+
+Para esta version inicial decidí manejar las opciones de configuración en un Hash, basicamente lo que hago es crear una manera distinta de acceder a un Hash, de tal manera que pareciera que estamos accediendo a atributos de un objeto y no a los valores de un Hash.
+
+Lo que uso en la solución es basicamente el poder de method_missing, si recibo un metodo que no existe para el objeto y este no tiene asociado un bloque, entonces sé que tengo que generar un nuevo valor en el Hash, por el contrario si recibo un metodo que no existe pero ademas este tiene asociado un bloque con el, entonces se que tengo que generar un nuevo valor en el Hash, pero este valor tiene que ser una nueva instancia de Configuration y tengo que pasar este objeto al bloque.
+
+Para un segundo planteamiento del problema me acordé de que Ruby trae una libreria que permite hacer lo que necesito: trabajar con un Hash como si se tratara de atributos de un objeto, esta libreria se llama "OpenStruct":http://apidock.com/ruby/OpenStruct
+
+{% highlight ruby %}
+require 'ostruct'
+
+class Configuration
+  def initialize
+    @options = OpenStruct.new
+  end
+
+  def method_missing(name, *args, &block)
+    if block_given?
+      @options.send((name.to_s + '=').to_sym, Configuration.new)
+      block.call(@options.send(name))
+    else
+      @options.send(name, args.shift)
+    end
+  end
+end
+
+def configure
+  conf = Configuration.new
+  yield conf
+  conf
+end
+{% endhighlight %}
+
+Con esto he ahorrado un par de lineas ;), pero lo que era mas importante era que tenia que aprender sobre esa libreria, ahora comprendo porque Ruby es el lenguaje perfecto para crear un "DSL":http://en.wikipedia.org/wiki/Domain-specific_programming_language, aqui les dejo también un buen articulo que me ayudo en el tema: "http://www.daniel-azuma.com/blog/view/z3bqa0t01uugg1/implementing_dsl_blocks":http://www.daniel-azuma.com/blog/view/z3bqa0t01uugg1/implementing_dsl_blocks
+
+Happy hacking!
+
