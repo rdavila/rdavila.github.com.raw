@@ -49,8 +49,11 @@ body.two-col
     +container
     background-color: #FFF
     margin: 20px auto
-  #header, #footer
+  #header
     +column($blueprint-grid-columns - 1)
+    margin: 0
+  #footer
+    +column($blueprint-grid-columns)
     margin: 0
   #header
     +prepend(1)
@@ -78,6 +81,20 @@ body.two-col
       li
         float: left
         padding-right: 10px
+  #footer
+    background-color: #251C17
+    text-align: center
+    padding: 30px 0
+    color: #B5B3B3
+    a
+      &:link, &:visited
+        font-weight: normal
+        color: #0066CC
+    a
+      &:hover, &:focus, &:active 
+        text-decoration: underline
+        font-weight: normal
+        color: #0066CC
   #sidebar
     $sidebar-columns: 5
     +append(1)
