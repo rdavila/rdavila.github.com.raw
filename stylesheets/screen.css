@@ -310,19 +310,20 @@ body.two-col #header h1 {
 body.two-col #header h1 a {
   color: #f1f4f7;
   text-decoration: none;
+  font-weight: normal;
 }
-/* line 73, ../sass/screen.sass */
+/* line 74, ../sass/screen.sass */
 body.two-col #header ul {
   list-style-type: none;
   float: left;
   margin-left: 130px;
 }
-/* line 77, ../sass/screen.sass */
+/* line 78, ../sass/screen.sass */
 body.two-col #header ul li {
   float: left;
   padding-right: 10px;
 }
-/* line 80, ../sass/screen.sass */
+/* line 81, ../sass/screen.sass */
 body.two-col #sidebar {
   padding-right: 40px;
   display: inline;
@@ -338,21 +339,21 @@ body.two-col #sidebar {
 * html body.two-col #sidebar {
   overflow-x: hidden;
 }
-/* line 88, ../sass/screen.sass */
+/* line 89, ../sass/screen.sass */
 body.two-col #sidebar img {
   float: left;
   margin-right: 10px;
 }
-/* line 91, ../sass/screen.sass */
+/* line 92, ../sass/screen.sass */
 body.two-col #sidebar h4 {
   margin: 0 20px 10px 0;
 }
-/* line 93, ../sass/screen.sass */
+/* line 94, ../sass/screen.sass */
 body.two-col #about {
   text-align: justify;
   margin-bottom: 20px;
 }
-/* line 96, ../sass/screen.sass */
+/* line 97, ../sass/screen.sass */
 body.two-col #content {
   display: inline;
   float: left;
@@ -366,15 +367,14 @@ body.two-col #content {
 * html body.two-col #content {
   overflow-x: hidden;
 }
-/* line 102, ../sass/screen.sass */
+/* line 103, ../sass/screen.sass */
 body.two-col ul#nav, body.two-col ul#categories {
   list-style: none;
   padding-left: 10px;
 }
-/* line 105, ../sass/screen.sass */
+/* line 106, ../sass/screen.sass */
 body.two-col ul#nav li, body.two-col ul#categories li {
   text-align: left;
-  letter-spacing: 1px;
   margin-bottom: 5px;
 }
 /* line 111, ../sass/screen.sass */
@@ -383,10 +383,14 @@ body.two-col .post h2 {
   color: #251c17;
 }
 /* line 114, ../sass/screen.sass */
+body.two-col .post h2 a {
+  font-weight: normal;
+}
+/* line 116, ../sass/screen.sass */
 body.two-col .post h3 {
   color: #775e43;
 }
-/* line 116, ../sass/screen.sass */
+/* line 118, ../sass/screen.sass */
 body.two-col .highlight {
   background-color: white;
   overflow: auto;
@@ -394,21 +398,33 @@ body.two-col .highlight {
   border: 1px solid black;
   margin-bottom: 15px;
 }
-/* line 123, ../sass/screen.sass */
+/* line 125, ../sass/screen.sass */
 body.two-col .underlined {
   border-bottom: 2px solid black;
 }
-/* line 126, ../sass/screen.sass */
+/* line 128, ../sass/screen.sass */
 body.two-col ul.posts_list {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-/* line 130, ../sass/screen.sass */
+/* line 132, ../sass/screen.sass */
 body.two-col ul.posts_list li {
   padding-bottom: 5px;
 }
-/* line 132, ../sass/screen.sass */
+/* line 134, ../sass/screen.sass */
 body.two-col ul.posts_list span {
   color: #a0a0a0;
+}
+/* line 138, ../sass/screen.sass */
+body.two-col a:link, body.two-col a:visited {
+  text-decoration: none;
+  font-weight: bold;
+  color: #0066cc;
+}
+/* line 143, ../sass/screen.sass */
+body.two-col a:hover, body.two-col a:focus, body.two-col a:active {
+  text-decoration: underline;
+  font-weight: bold;
+  color: #251c17;
 }

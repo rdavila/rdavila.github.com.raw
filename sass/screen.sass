@@ -70,6 +70,7 @@ body.two-col
       a
         color: #F1F4F7
         text-decoration: none
+        font-weight: normal
     ul
       list-style-type: none
       float: left
@@ -104,13 +105,14 @@ body.two-col
     padding-left: 10px
     li
       text-align: left
-      letter-spacing: 1px
       margin-bottom: 5px
 
   .post
     h2
       line-height: 35px
       color: #251C17
+      a
+        font-weight: normal
     h3
       color: #775E43
   .highlight
@@ -131,3 +133,15 @@ body.two-col
       padding-bottom: 5px
     span
       color: #A0A0A0
+
+  a
+    &:link, &:visited
+      text-decoration: none
+      font-weight: bold
+      color: #0066CC
+  a
+    &:hover, &:focus, &:active 
+      text-decoration: underline
+      font-weight: bold
+      color: #251C17
+  
