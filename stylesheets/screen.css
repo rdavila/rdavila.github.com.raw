@@ -430,7 +430,7 @@ body.two-col a:hover, body.two-col a:focus, body.two-col a:active {
   color: #251c17;
 }
 /* line 149, ../sass/screen.sass */
-body.two-col #tools img {
+body.two-col #tools img, body.two-col #portfolio img {
   float: left;
   padding-right: 10px;
 }
