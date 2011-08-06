@@ -54,19 +54,29 @@ body.two-col
     margin: 0
   #header
     +prepend(1)
-    padding-top: 15px
+    padding-top: 40px
     background-color: #251C17
     position: relative
     height: 125px
     small
       position: absolute
-      top: 70px
-      //left: 17px
+      top: 90px
+      left: 40px
       color: #AF9F7B
       font-style: italic
       //font-size: small
     h1
-      color: white
+      float: left
+      a
+        color: #F1F4F7
+        text-decoration: none
+    ul
+      list-style-type: none
+      float: left
+      margin-left: 130px
+      li
+        float: left
+        padding-right: 10px
   #sidebar
     $sidebar-columns: 5
     +append(1)
