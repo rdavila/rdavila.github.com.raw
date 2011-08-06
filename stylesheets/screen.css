@@ -350,10 +350,9 @@ body.two-col #sidebar h4 {
 }
 /* line 94, ../sass/screen.sass */
 body.two-col #about {
-  text-align: justify;
   margin-bottom: 20px;
 }
-/* line 97, ../sass/screen.sass */
+/* line 96, ../sass/screen.sass */
 body.two-col #content {
   display: inline;
   float: left;
@@ -367,31 +366,31 @@ body.two-col #content {
 * html body.two-col #content {
   overflow-x: hidden;
 }
-/* line 103, ../sass/screen.sass */
+/* line 102, ../sass/screen.sass */
 body.two-col ul#nav, body.two-col ul#categories {
   list-style: none;
   padding-left: 10px;
 }
-/* line 106, ../sass/screen.sass */
+/* line 105, ../sass/screen.sass */
 body.two-col ul#nav li, body.two-col ul#categories li {
   text-align: left;
   margin-bottom: 5px;
 }
-/* line 111, ../sass/screen.sass */
+/* line 110, ../sass/screen.sass */
 body.two-col .post h2 {
   line-height: 35px;
   color: #251c17;
   margin: 0;
 }
-/* line 115, ../sass/screen.sass */
+/* line 114, ../sass/screen.sass */
 body.two-col .post h2 a {
   font-weight: normal;
 }
-/* line 117, ../sass/screen.sass */
+/* line 116, ../sass/screen.sass */
 body.two-col .post h3 {
   color: #775e43;
 }
-/* line 119, ../sass/screen.sass */
+/* line 118, ../sass/screen.sass */
 body.two-col .highlight {
   background-color: white;
   overflow: auto;
@@ -399,42 +398,42 @@ body.two-col .highlight {
   border: 1px solid black;
   margin-bottom: 15px;
 }
-/* line 126, ../sass/screen.sass */
+/* line 125, ../sass/screen.sass */
 body.two-col .underlined {
   border-bottom: 2px solid black;
 }
-/* line 129, ../sass/screen.sass */
+/* line 128, ../sass/screen.sass */
 body.two-col ul.posts_list {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-/* line 133, ../sass/screen.sass */
+/* line 132, ../sass/screen.sass */
 body.two-col ul.posts_list li {
   padding-bottom: 5px;
 }
-/* line 135, ../sass/screen.sass */
+/* line 134, ../sass/screen.sass */
 body.two-col ul.posts_list span {
   color: #a0a0a0;
 }
-/* line 139, ../sass/screen.sass */
+/* line 138, ../sass/screen.sass */
 body.two-col a:link, body.two-col a:visited {
   text-decoration: none;
   font-weight: bold;
   color: #0066cc;
 }
-/* line 144, ../sass/screen.sass */
+/* line 143, ../sass/screen.sass */
 body.two-col a:hover, body.two-col a:focus, body.two-col a:active {
   text-decoration: underline;
   font-weight: bold;
   color: #251c17;
 }
-/* line 149, ../sass/screen.sass */
+/* line 148, ../sass/screen.sass */
 body.two-col #tools img, body.two-col #portfolio img {
   float: left;
   padding-right: 10px;
 }
-/* line 153, ../sass/screen.sass */
+/* line 152, ../sass/screen.sass */
 body.two-col a.external {
   background: url(/images/external_link.png) no-repeat right top;
   padding-right: 15px;
