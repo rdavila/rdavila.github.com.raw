@@ -1,0 +1,12 @@
+---
+layout: post
+title: Una cara nueva para este descuidado blog!
+category: otros
+---
+Y luego de un buen tiempo sin escribir nada por aqui debido a que cuento con muy poco tiempo disponible, decidi "(external)sacar el FUA":http://www.youtube.com/watch?v=SWOz-kIwDuU y ponerme manos a la obra con el rediseño de este humilde blog, aunque en el proceso me quedo claro que no soy diseñador ni debo intentarlo hize un pequeño esfuerzo.
+
+Empezé por leer este "(external)muy buen libro sobre CSS":http://www.amazon.com/CSS-Mastery-Advanced-Standards-Solutions/dp/1430223979/ref=sr_1_1?ie=UTF8&qid=1312736069&sr=8-1 para reforzar los no muy solidos fundamentos que tenia hasta el momento y de paso también poder pelearme con el diseñador de mi trabajo con fundamento ;).
+
+En esta ocasión use nuevamente "(external)Compass":http://compass-style.org/ pero ahora con "(external)Blueprint":http://www.blueprintcss.org/ (en la version anterior use "(external)Sussy":http://susy.oddbird.net/), también aproveche para aprender y pasar el blog a "(external)Jekyll":https://github.com/mojombo/jekyll/wiki y de paso hospedar mi sitio en "(external)Github":https://github.com 
+
+De ahora en adelante hare el esfuerzo de escribir al menos 1 artículo por semana ya que ahora le tengo mucho mas cariño que antes a este blogcito ;).
