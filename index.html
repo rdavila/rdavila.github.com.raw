@@ -6,7 +6,10 @@ title: Ruben on Rails
 {% for post in site.posts limit:1 %}
   <div class='post'>
     <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    <em>Posted on {{ post.date | date_to_long_string }}.</em>
+    <p>
+      <em>Publicado el: {{ post.date | date: '%Y - %m - %d' }}</em>
+      <a href="{{ post.url }}#disqus_thread" class='comments_counter'>Comentarios</a>
+    </p>
     {{ post.content }}
   </div>
 {% endfor %}
@@ -15,9 +18,24 @@ title: Ruben on Rails
 <ul class='posts_list'>
   {% for post in site.posts limit:5 offset:1 %}
     <li>
-      <span>{{ post.date | date: '%d - %m - %Y' }} » </span>
+      <span>{{ post.date | date: '%Y - %m - %d' }} » </span>
       <a href="{{ post.url }}">{{ post.title }}</a>
     </li>
   {% endfor %}
 </ul>
 <h5><a href="/archivo">Ver todos los artículos</a></h5>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'rubenonrails'; // required: replace example with your forum shortname
+    var disqus_developer = 0;
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
