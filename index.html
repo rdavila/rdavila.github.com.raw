@@ -9,7 +9,18 @@ title: Ruben on Rails
     <p class='post_metadata'>
       <em>Publicado el: {{ post.date | date: '%Y - %m - %d' }}</em>
       <a href="{{ post.url }}#disqus_thread" class='comments_counter'>Comentarios</a>
+
+      <span id='share_links'>
+        <a href="http://twitter.com/share" class="twitter-share-button"
+           data-url="http://rubenonrails.com/{{ post.url }}"
+           data-via="rdavila"
+           data-text="{{ post.title }}"
+           data-lang="es"
+           data-related="anywhere:The Javascript API"
+           data-count="horizontal">Twittear</a>
+      <span> 
     </p>
+    
     {{ post.content }}
   </div>
 {% endfor %}
@@ -39,3 +50,4 @@ title: Ruben on Rails
     }());
 </script>
 
+<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
