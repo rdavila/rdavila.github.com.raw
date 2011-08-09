@@ -1,0 +1,7 @@
+---
+layout: post
+title: Recursos para aprender Ruby y Rails en español
+categories: ['ruby', 'rails']
+---
+
+Hoy llegó en la "(external)lista de usuarios de Ruby de sudamérica":http://groups.google.com/group/rubysur/subscribe un mensaje anunciando la "(external)traducción de algunos recursos para aprender Ruby y Rails al español":http://groups.google.com/group/rubysur/browse_thread/thread/98f3ab285b5c42c9 gracias a Carmen Díaz Echauri. Ojalá que sea de mucha ayuda sobre todo a aquellos que recién se estan poniendo las pilas con el idioma inglés. Mi recomendación es que aprendan el idioma por la buena(en algún centro de idiomas) o por la mala(devorando un libro con el diccionario al lado), de lo contrario sera muy dificil seguir al tanto de todo lo bueno que sale a diario en el mundo del desarrollo.
